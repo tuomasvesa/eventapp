@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Add review</h2>
+
+    <h2 aria-placeholder="${event.name}">Add a review!</h2>
+    <form action="#" th:action="@{/savenewreview}" method="post" th:object="${review}">
+        <p><input type="radio"/>Score:</p>
+        <label for="1"></label>
+        <label for="2"></label>
+        <label for="3"></label>
+        <label for="4"></label>
+        <label for="5"></label>
+    </form>
+</body>
+</html>
