@@ -60,7 +60,6 @@ public class EventController {
         model.addAttribute("categories", categoryRepo.findAll());
         model.addAttribute("cities", cityRepo.findAll());
         return "addevent"; // addevent.html
-
     }
 
     @PostMapping("/savenewevent")

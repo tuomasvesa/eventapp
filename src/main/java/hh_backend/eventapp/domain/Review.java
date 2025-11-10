@@ -8,13 +8,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reviewId;
+    @NotNull(message = "Score cannot be null")
     private int score;
+    @NotNull(message = "Review text cannot be null")
     private String reviewText;
     @JsonIgnoreProperties ({"category", "city", "review"})
     @OneToOne

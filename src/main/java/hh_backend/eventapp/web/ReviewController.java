@@ -3,6 +3,7 @@ package hh_backend.eventapp.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,10 @@ public class ReviewController {
     }
 
     @PostMapping("/savenewreview")
-    public String saveNewReview(@ModelAttribute Review newReview, @RequestParam Long eventId) {
+    public String saveNewReview(@ModelAttribute Review newReview, BindingResult bingingResult, @RequestParam Long eventId) {
+        if (bingingResult.hasErrors()) {
+            return "addreview/{id}";
+        }
         Event event = eventRepo.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found: " + eventId));
         newReview.setEvent(event);
         event.setReview(newReview);
