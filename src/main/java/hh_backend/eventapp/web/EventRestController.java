@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hh_backend.bookstore.domain.Event;
-import hh_backend.bookstore.domain.EventRepository;
+import hh_backend.eventapp.domain.Event;
+import hh_backend.eventapp.domain.EventRepository;
 
 
 @RestController

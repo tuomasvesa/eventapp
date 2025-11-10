@@ -10,7 +10,7 @@
     <h2>Add a new event</h2>
     <form action="#" th:action="@{/savenewevent}" method="post" th:object="${event}">
         <p>Name: </p>
-        <input type="text" th:field="*{name}" />
+        <input type="text" th:field="*{name}" th:error="Name cant be null" />
          
         <p>Category:  </p>
             <select th:field="${event.category}">

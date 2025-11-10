@@ -22,7 +22,6 @@ import jakarta.validation.Valid;
 @Controller
 public class EventController {
 
-
     @Autowired
     private EventRepository eventRepo;
 
@@ -35,14 +34,14 @@ public class EventController {
     @Autowired
     private ReviewRepository reviewRepo;
 
-    /* 
-    EventController(EventappApplication eventappApplication, CommandLineRunner demo) {
-        this.eventappApplication = eventappApplication;
-        this.demo = demo;
-    }
+    /*
+     * EventController(EventappApplication eventappApplication, CommandLineRunner
+     * demo) {
+     * this.eventappApplication = eventappApplication;
+     * this.demo = demo;
+     * }
      */
 
- 
     @GetMapping("/index")
     public String getFrontPage() {
         return "index"; // index.html
@@ -63,8 +62,10 @@ public class EventController {
     }
 
     @PostMapping("/savenewevent")
-    public String saveNewEvent(@Valid @ModelAttribute Event newEvent, BindingResult bindingResult) {
+    public String saveNewEvent(@Valid @ModelAttribute Event newEvent, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryRepo.findAll());
+            model.addAttribute("cities", cityRepo.findAll());
             return "addevent";
         }
         eventRepo.save(newEvent);
@@ -92,6 +93,6 @@ public class EventController {
         event.setReview(review);
         eventRepo.save(event);
         return "redirect:/eventlist"; // eventlist.html
-        
+
     }
 }
