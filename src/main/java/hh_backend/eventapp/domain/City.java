@@ -20,7 +20,7 @@ public class City {
     private Long cityId;
     private String name;
 
-    @JsonIgnoreProperties({ "category", "city" })
+    @JsonIgnoreProperties({ "category", "city", "review" })
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
     private List<Event> events;
 

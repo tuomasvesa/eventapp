@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add review</title>
 </head>
-<body>
-    <h2>Add review</h2>
 
-    <h2 aria-placeholder="${event.name}">Add a review!</h2>
+<body>
+    <h2>Add a review for <span th:text="${event.name}"></span>!</h2>
+
     <form action="#" th:action="@{/savenewreview}" method="post" th:object="${review}">
-        <p><input type="radio"/>Score:</p>
-        <label for="1"></label>
-        <label for="2"></label>
-        <label for="3"></label>
-        <label for="4"></label>
-        <label for="5"></label>
-    </form>
+
+        <p>Score:</p>
+        
+        <p></p><input type="radio" value="1" th:field="*{score}"/>1</p>
+        <p></p><input type="radio" value="2" th:field="*{score}"/>2</p>
+        <p></p><input type="radio" value="3" th:field="*{score}"/>3</p>
+        <p></p><input type="radio" value="4" th:field="*{score}"/>4</p>
+        <p></p><input type="radio" value="5" th:field="*{score}"/>5</p>
+        
+    
+        <textarea th:field="*{reviewText}" size="160px"></textarea>
+        <p><input type="hidden" name="eventId" th:field="${event.eventId}"></p>
+        <input type="submit" value="Add review"/>
+
+    </form> <!--<input type="text" style="height: 150px" th:field="*{reviewText}"/>-->
 </body>
+
 </html>

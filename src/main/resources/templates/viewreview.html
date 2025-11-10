@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Review</title>
+</head>
+
+<body>
+
+    <h2>Review for <span th:text="${event.name}"></span>!</h2>
+    <p>Score: <span th:text="${review.score}"></span></p>
+    <p>Text: <span th:text="${review.reviewText}"></span></p>
+
+    <a th:href="@{/eventlist}">Back</a>
+
+
+</body>
+
+</html>

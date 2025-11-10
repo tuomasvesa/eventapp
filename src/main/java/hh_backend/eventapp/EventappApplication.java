@@ -10,12 +10,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import hh_backend.eventapp.domain.AppUser;
 import hh_backend.eventapp.domain.Category;
 import hh_backend.eventapp.domain.CategoryRepository;
 import hh_backend.eventapp.domain.City;
 import hh_backend.eventapp.domain.CityRepository;
 import hh_backend.eventapp.domain.Event;
 import hh_backend.eventapp.domain.EventRepository;
+import hh_backend.eventapp.domain.ReviewRepository;
+import hh_backend.eventapp.domain.UserRepository;
 
 @SpringBootApplication
 public class EventappApplication {
@@ -27,13 +30,14 @@ public class EventappApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(EventRepository eventRepo, CategoryRepository categoryRepo, CityRepository cityRepo) {
+	public CommandLineRunner demo(EventRepository eventRepo, CategoryRepository categoryRepo, CityRepository cityRepo,
+			ReviewRepository reviewRepo, UserRepository userRepo) {
 		return (args) -> {
 			Log.info("Save some categories");
-			categoryRepo.save(new Category("concert"));
-			categoryRepo.save(new Category("dance"));
-			categoryRepo.save(new Category("play"));
-			categoryRepo.save(new Category("expo"));
+			categoryRepo.save(new Category("Concert"));
+			categoryRepo.save(new Category("Dance"));
+			categoryRepo.save(new Category("Play"));
+			categoryRepo.save(new Category("Expo"));
 
 			Log.info("fetch all categories");
 			for (Category category : categoryRepo.findAll()) {
@@ -51,21 +55,31 @@ public class EventappApplication {
 			for (City city : cityRepo.findAll()) {
 				Log.info(city.toString());
 			}
-			
+
 			Log.info("Save some events");
 
-			eventRepo.save(new Event("Joulukonsertti", categoryRepo.findByName("concert"), 
-							cityRepo.findByName("Helsinki"), LocalDate.of(2025, 12, 18), 
-							LocalTime.of(19, 0), LocalTime.of(20, 30), 10.0, 
-							"Joululauluja", "", false));
-			eventRepo.save(new Event("Bachata night", categoryRepo.findByName("dance"), 
-							cityRepo.findByName("Helsinki"), LocalDate.of(2025, 11, 20), 
-							LocalTime.of(18, 0), LocalTime.of(21, 0), 5.0, 
-							"Dance with a live band!", "", false));
-			eventRepo.save(new Event("Speksi", categoryRepo.findByName("play"), 
-							cityRepo.findByName("Espoo"), LocalDate.of(2025, 12,9), 
-							LocalTime.of(18, 0), LocalTime.of(20, 00), 8.0, 
-							"Hauskaa komediaa!", "", false));
+			eventRepo.save(new Event("Joulukonsertti", categoryRepo.findByName("Concert").get(0),
+					cityRepo.findByName("Helsinki").get(0), LocalDate.of(2025, 12, 18),
+					LocalTime.of(19, 0), LocalTime.of(20, 30), 10.0,
+					"Joululauluja", null, false));
+			eventRepo.save(new Event("Bachata night", categoryRepo.findByName("Dance").get(0),
+					cityRepo.findByName("Helsinki").get(0), LocalDate.of(2025, 11, 20),
+					LocalTime.of(18, 0), LocalTime.of(21, 0), 5.0,
+					"Dance with a live band!", null, false));
+			eventRepo.save(new Event("Speksi", categoryRepo.findByName("Play").get(0),
+					cityRepo.findByName("Espoo").get(0), LocalDate.of(2025, 12, 9),
+					LocalTime.of(18, 0), LocalTime.of(20, 00), 8.0,
+					"Hauskaa komediaa!", null, false));
+
+			AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6",
+					"user@gmail.com", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C",
+					"admin@gmail.com", "ADMIN");
+			AppUser user3 = new AppUser("tuomas", "$2a$12$6huzdDEbBjP3ZcR3.gA.8u/FmmPEPAV62jS2hxWL4ASauPTtw9Op2",
+					"tuomas@gmail.com", "ADMIN");
+			userRepo.save(user1);
+			userRepo.save(user2);
+			userRepo.save(user3);
 
 			Log.info("fetch all events");
 			for (Event event : eventRepo.findAll()) {

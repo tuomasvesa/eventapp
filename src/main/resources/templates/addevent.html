@@ -9,7 +9,7 @@
     <h2>Add a new event</h2>
     <form action="#" th:action="@{/savenewevent}" method="post" th:object="${event}">
         <p>Name: <input type="text" th:field="*{name}" /></p>
-        
+         
         <p>Category: 
             <select th:field="${event.category}">
                 <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}">

@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events</title>
+     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th.href="@{/css/bootstrap.min.css}" />
 </head>
+
 <body>
-    <h1> List of events</h1>
-    <table>
+    <h1> Events</h1>
+    <h2>Hello <span sec:authentication="name"></span>!</h2>
+     <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" />
+    </form>
+    
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Event name</th>
@@ -26,26 +34,33 @@
                 <td th:text="${event.startTime}"></td>
                 <td th:text="${event.endTime}"></td>
                 <td th:text="${event.description}"></td>
-                <td> 
+                <td sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/editevent/{id}(id=${event.eventId})}">Edit</a>
                 </td>
+
                 <td>
-                    <a th:href="@{/addreview/{id}(id=${event.eventId})}">Add a review</a>
+                    <a th:if="${event.review != null}" th:href="@{/viewreview/{id}(id=${event.eventId})}">
+                        View review
+                    </a>
+                    <a th:unless="${event.review != null}" th:href="@{/addreview/{id}(id=${event.eventId})}" sec:authorize="hasAuthority('ADMIN')">
+                        Add review
+                    </a>
                 </td>
-                <td> <!--Tänne ehkä sec:authorize="hasAuthority('ADMIN')"-->
+
+                <td sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/deleteevent/{id}(id=${event.eventId})}">Delete</a>
                 </td>
-                
 
             </tr>
         </tbody>
-        
+
     </table>
     <br>
     <a class="btn btn-success" th:href="@{/addevent}">Add event</a>
 
 
-    
-    
+
+
 </body>
+
 </html>

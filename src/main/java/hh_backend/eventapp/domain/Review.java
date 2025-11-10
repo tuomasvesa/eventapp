@@ -1,5 +1,7 @@
 package hh_backend.eventapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Review {
     private Long reviewId;
     private int score;
     private String reviewText;
+    @JsonIgnoreProperties ({"category", "city", "review"})
     @OneToOne
     @JoinColumn(name = "eventId")
     private Event event;
@@ -51,11 +54,11 @@ public class Review {
         this.reviewText = reviewText;
     }
 
-    public Event getEventId() {
+    public Event getEvent() {
         return event;
     }
 
-    public void setEventId(Event event) {
+    public void setEvent(Event event) {
         this.event = event;
     }
 

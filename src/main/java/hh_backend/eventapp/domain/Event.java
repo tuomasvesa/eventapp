@@ -34,7 +34,10 @@ public class Event {
     private LocalTime endTime;
     private Double price;
     private String description;
-    private String review;
+    @JsonIgnoreProperties("event")
+    @ManyToOne
+    @JoinColumn(name = "reviewId")
+    private Review review;
     private Boolean attended;
 
     // Constructors
@@ -46,7 +49,7 @@ public class Event {
     // Getters and setters
 
     public Event(String name, Category category, City city, LocalDate date, LocalTime startTime,
-            LocalTime endTime, Double price, String description, String review, Boolean attended) {
+            LocalTime endTime, Double price, String description, Review review, Boolean attended) {
         this.name = name;
         this.category = category;
         this.city = city;
@@ -133,11 +136,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getReview() {
+    public Review getReview() {
         return review;
     }
 
-    public void setReview(String review) {
+    public void setReview(Review review) {
         this.review = review;
     }
 
@@ -154,7 +157,7 @@ public class Event {
     public String toString() {
         return "Event [id=" + eventId + ", name=" + name + ", category=" + category + ", city=" + city + ", date=" + date
                 + ", startTime=" + startTime + ", endTime=" + endTime + ", price=" + price + ", description="
-                + description + ", review=" + review + ", attended=" + attended + "]";
+                + description + ", attended=" + attended + "]";
     }
 
 

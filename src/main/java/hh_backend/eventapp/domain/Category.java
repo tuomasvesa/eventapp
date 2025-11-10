@@ -20,7 +20,7 @@ public class Category {
     private Long categoryId;
     private String name;
 
-    @JsonIgnoreProperties ({"category", "city"})
+    @JsonIgnoreProperties ({"category", "city", "review"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category") // Linkittyy Event-entityluokan category-attribuuttiin
     private List<Event> events;
 

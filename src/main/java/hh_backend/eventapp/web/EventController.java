@@ -14,6 +14,8 @@ import hh_backend.eventapp.domain.Event;
 import hh_backend.eventapp.domain.CategoryRepository;
 import hh_backend.eventapp.domain.CityRepository;
 import hh_backend.eventapp.domain.EventRepository;
+import hh_backend.eventapp.domain.Review;
+import hh_backend.eventapp.domain.ReviewRepository;
 
 @Controller
 public class EventController {
@@ -28,6 +30,9 @@ public class EventController {
     @Autowired
     private CityRepository cityRepo;
 
+    @Autowired
+    private ReviewRepository reviewRepo;
+
     /* 
     EventController(EventappApplication eventappApplication, CommandLineRunner demo) {
         this.eventappApplication = eventappApplication;
@@ -41,10 +46,10 @@ public class EventController {
         return "index"; // index.html
     }
 
-    @GetMapping("/events")
+    @GetMapping("/eventlist")
     public String getEvents(Model model) {
         model.addAttribute("events", eventRepo.findAll());
-        return "events"; // events.html
+        return "eventlist"; // eventlist.html
     }
 
     @GetMapping("/addevent")
@@ -59,18 +64,19 @@ public class EventController {
     @PostMapping("/savenewevent")
     public String saveNewEvent(@ModelAttribute Event newEvent) {
         eventRepo.save(newEvent);
-        return "redirect:/events"; // events.html
+        return "redirect:/eventlist"; // eventlist.html
     }
 
     @GetMapping("/deleteevent/{id}")
     public String deleteEvent(@PathVariable("id") Long eventId) {
         eventRepo.deleteById(eventId);
-        return "redirect:/events";
+        return "redirect:/eventlist";
     }
 
     @GetMapping("editevent/{id}")
     public String getEditEventForm(@PathVariable("id") Long eventId, Model model) {
-        model.addAttribute("event", eventRepo.findById(eventId));
+        Event event = eventRepo.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found " + eventId));
+        model.addAttribute("event", event);
         model.addAttribute("categories", categoryRepo.findAll());
         model.addAttribute("cities", cityRepo.findAll());
         return "editevent"; // editevent.html
@@ -78,8 +84,10 @@ public class EventController {
 
     @PostMapping("/updateevent")
     public String updateEvent(@ModelAttribute Event event) {
+        Review review = reviewRepo.findByEvent(event);
+        event.setReview(review);
         eventRepo.save(event);
-        return "redirect:/events"; // events.html
+        return "redirect:/eventlist"; // eventlist.html
         
     }
 }
