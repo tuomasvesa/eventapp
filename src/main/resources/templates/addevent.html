@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add event</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th.href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
     <h2>Add a new event</h2>
     <form action="#" th:action="@{/savenewevent}" method="post" th:object="${event}">
-        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <p>Name: </p>
+        <input type="text" th:field="*{name}" />
          
-        <p>Category: 
+        <p>Category:  </p>
             <select th:field="${event.category}">
                 <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}">
                 </option>
             </select>
-        </p>
         
-        <p>City: 
+        
+        <p>City: </p>
             <select th:field="${event.city}">
                 <option th:each="city : ${cities}" th:value="${city.cityId}" th:text="${city.name}">
                 </option>
             </select>
-        </p>
-        <p>Date: <input type="date" th:field="*{date}"/></p>
-        <p>Start time: <input type="time" th:field="*{startTime}"/></p>
-        <p>End time: <input type="time" th:field="*{endTime}"/></p>
-        <p>Price: <input type="number" th:field="*{price}" /></p>
-        <p>Description: <input type="text" th:field="*{description}" /></p>
+        
+        <p>Date: </p>
+        <input type="date" th:field="*{date}"/>
+        <p>Start time: </p>
+        <input type="time" th:field="*{startTime}"/>
+        <p>End time: </p>
+        <input type="time" th:field="*{endTime}"/>
+        <p>Price: </p>
+        <input type="number" th:field="*{price}" />
+        <p>Description: </p> 
+        <textarea th:field="*{description}"></textarea>
+        <br>
         <input type="submit" value="Add event" />
 
     </form>

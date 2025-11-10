@@ -6,6 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,6 +21,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
+    @NotNull(message = "Name cannot be null")
     private String name;
 
     @JsonIgnoreProperties ("events")
@@ -28,10 +33,12 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "cityId")
     private City city;
-
+    @NotNull(message = "Date cannot be null")
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+    @Min(value = 0, message = "Price cannot be less than zero")
+    @Max(value = 1000000, message = "That's bit too much!")
     private Double price;
     private String description;
     @JsonIgnoreProperties("event")

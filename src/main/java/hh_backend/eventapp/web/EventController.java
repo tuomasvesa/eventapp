@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import hh_backend.eventapp.domain.CityRepository;
 import hh_backend.eventapp.domain.EventRepository;
 import hh_backend.eventapp.domain.Review;
 import hh_backend.eventapp.domain.ReviewRepository;
+import jakarta.validation.Valid;
 
 @Controller
 public class EventController {
@@ -62,7 +64,10 @@ public class EventController {
     }
 
     @PostMapping("/savenewevent")
-    public String saveNewEvent(@ModelAttribute Event newEvent) {
+    public String saveNewEvent(@Valid @ModelAttribute Event newEvent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addevent";
+        }
         eventRepo.save(newEvent);
         return "redirect:/eventlist"; // eventlist.html
     }
