@@ -88,7 +88,14 @@ public class EventController {
     }
 
     @PostMapping("/updateevent")
-    public String updateEvent(@ModelAttribute Event event) {
+    public String updateEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            Long id = event.getEventId();
+            model.addAttribute("event", eventRepo.findById(id));
+            model.addAttribute("categories", categoryRepo.findAll());
+            model.addAttribute("cities", cityRepo.findAll());
+            return "editevent";
+        }
         Review review = reviewRepo.findByEvent(event);
         event.setReview(review);
         eventRepo.save(event);
